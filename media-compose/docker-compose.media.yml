@@ -7,7 +7,7 @@ services:
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${MEDIA_CONFIG_ROOT:-.}/sonarr:/config
+      - ${MEDIA_CONFIG_ROOT}/sonarr:/config
       - ${MEDIA_DATA_ROOT}:/data
     restart: on-failure
     healthcheck:
@@ -39,7 +39,7 @@ services:
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${MEDIA_CONFIG_ROOT:-.}/radarr:/config
+      - ${MEDIA_CONFIG_ROOT}/radarr:/config
       - ${MEDIA_DATA_ROOT}:/data
     restart: on-failure
     healthcheck:
@@ -71,7 +71,7 @@ services:
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${MEDIA_CONFIG_ROOT:-.}/bazarr/config:/config
+      - ${MEDIA_CONFIG_ROOT}/bazarr/config:/config
       - ${MEDIA_DATA_ROOT}:/data
     restart: on-failure
     healthcheck:
@@ -102,7 +102,7 @@ services:
       - LOG_LEVEL=debug
       - TZ=${TIMEZONE}
     volumes:
-      - ${MEDIA_CONFIG_ROOT:-.}/jellyseerr:/app/config
+      - ${MEDIA_CONFIG_ROOT}/jellyseerr:/app/config
     restart: on-failure
     healthcheck:
       test:
@@ -183,7 +183,7 @@ services:
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${MEDIA_CONFIG_ROOT:-.}/prowlarr:/config
+      - ${MEDIA_CONFIG_ROOT}/prowlarr:/config
     restart: on-failure
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://127.0.0.1:9696/prowlarr/ping"]
@@ -229,7 +229,7 @@ services:
       - WEBUI_PORT=8080
       - DOCKER_MODS=ghcr.io/gabe565/linuxserver-mod-vuetorrent
     volumes:
-      - ${MEDIA_CONFIG_ROOT:-.}/qbittorrent:/config
+      - ${MEDIA_CONFIG_ROOT}/qbittorrent:/config
       - ${MEDIA_DOWNLOAD_ROOT}:/data/torrents
     restart: on-failure
     healthcheck:
@@ -267,8 +267,9 @@ services:
     volumes:
       - ${MEDIA_DOWNLOAD_ROOT}:/data/torrents
     restart: on-failure
-    user: ${USER_ID}:${GROUP_ID}
     environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
       - UN_SONARR_0_URL=http://sonarr:8989/sonarr
       - UN_SONARR_0_API_KEY=${SONARR_API_KEY}
@@ -287,7 +288,7 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
-      - ${MEDIA_CONFIG_ROOT:-.}/jellyfin:/config
+      - ${MEDIA_CONFIG_ROOT}/jellyfin:/config
       - ${MEDIA_DATA_ROOT}:/data
       - ${MEDIA_EXTERNAL_DATA_ROOT}:/external-data
     ports:
