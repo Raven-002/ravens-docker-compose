@@ -1,0 +1,6 @@
+users
+data/*
+!data/plugins
+.nv/
+.aspnet
+log

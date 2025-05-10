@@ -1,0 +1,16 @@
+{
+  "category": "General",
+  "changelog": "- Fixes for Jellyfin 10.9.9 (#21) @crobibero",
+  "description": "Cleans old sessions.",
+  "guid": "ec9e2a74-1311-4a14-b302-158e3d95fd1d",
+  "name": "Session Cleaner",
+  "overview": "Removes old sessions (devices).",
+  "owner": "jellyfin",
+  "targetAbi": "10.9.9.0",
+  "timestamp": "2024-08-05T13:39:43.0000000Z",
+  "version": "4.0.0.0",
+  "status": "Active",
+  "autoUpdate": true,
+  "imagePath": "",
+  "assemblies": []
+}

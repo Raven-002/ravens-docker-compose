@@ -1,0 +1,16 @@
+{
+  "category": "General",
+  "changelog": "- fix: require admin privileges to access API (#104) @Theta-Dev\n- Fix GetLastSeenString method (#103) @Nathan5471\n- Fix database connection disposal on server shutdown (#98) @a-mnich\n- fix nullable warnings (#99) @a-mnich\n\n### Bug Fixes ###\n- Improve Timezone Handling and Fix End Date Picker (#101) @a-mnich",
+  "description": "Show reports for playback activity",
+  "guid": "5c534381-91a3-43cb-907a-35aa02eb9d2c",
+  "name": "Playback Reporting",
+  "overview": "Collect and show user play statistics",
+  "owner": "jellyfin",
+  "targetAbi": "10.10.7.0",
+  "timestamp": "2025-04-13T20:52:51.0000000Z",
+  "version": "16.0.0.0",
+  "status": "Active",
+  "autoUpdate": true,
+  "imagePath": "/config/data/plugins/Playback Reporting_16.0.0.0/jellyfin-plugin-playbackreporting.png",
+  "assemblies": []
+}

@@ -1,0 +1,16 @@
+{
+  "category": "General",
+  "changelog": "",
+  "description": "Kills transcoded streams.\n",
+  "guid": "a0444c3b-fe1c-4258-9e0f-a139fc093949",
+  "name": "Transcode Killer",
+  "overview": "Kills transcoded streams.",
+  "owner": "jellyfin",
+  "targetAbi": "10.9.0.0",
+  "timestamp": "2024-05-12T01:25:13.0000000Z",
+  "version": "3.0.0.0",
+  "status": "Active",
+  "autoUpdate": true,
+  "imagePath": "",
+  "assemblies": []
+}

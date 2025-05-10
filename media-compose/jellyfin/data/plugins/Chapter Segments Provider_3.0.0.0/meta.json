@@ -1,0 +1,16 @@
+{
+  "category": "General",
+  "changelog": "",
+  "description": "Create media segments based on chapters.\n",
+  "guid": "698b6f33-14ca-49b5-9d79-fc3c0ab941f5",
+  "name": "Chapter Segments Provider",
+  "overview": "Create media segments based on chapters.",
+  "owner": "jellyfin",
+  "targetAbi": "10.10.0.0",
+  "timestamp": "2024-10-26T18:20:41.0000000Z",
+  "version": "3.0.0.0",
+  "status": "Active",
+  "autoUpdate": true,
+  "imagePath": "",
+  "assemblies": []
+}

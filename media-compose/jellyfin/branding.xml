@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BrandingOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LoginDisclaimer />
+  <CustomCss>@import url('https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/purple.css');
+
+.sliderMarker.watched {
+  background-color: rgba(var(--white), 0.7) !important;
+  width: 6px !important;
+  height: 20px !important;
+  margin-top: -8px !important;
+  border-radius: 999px !important;
+}
+
+  /* Hide extra buttons in media player */
+
+
+  .btnPreviousChapter, .btnNextChapter, .btnRewind, .btnFastForward, .btnPreviousTrack {
+    display: inline-flex;
+  }
+
+
+.sliderMarker.unwatched {
+  background-color: rgba(var(--white-off), 0.3) !important;
+  width: 6px !important;
+  height: 20px !important;
+  margin-top: -8px !important;
+  border-radius: 999px !important;
+}</CustomCss>
+  <SplashscreenEnabled>false</SplashscreenEnabled>
+</BrandingOptions>

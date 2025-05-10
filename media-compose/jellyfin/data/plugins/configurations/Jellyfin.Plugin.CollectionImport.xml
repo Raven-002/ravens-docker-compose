@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PluginConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ImportSets>
+    <ImportSet>
+      <Name>Trending</Name>
+      <Urls>
+        <string>https://mdblist.com/lists/adamosborne01/hmmmmmmmm</string>
+        <string>https://mdblist.com/lists/adamosborne01/trending-shows1</string>
+      </Urls>
+      <UsePlaylistsOverCollections>false</UsePlaylistsOverCollections>
+      <ExcludedLibraries />
+    </ImportSet>
+    <ImportSet>
+      <Name>Most Watched This Week</Name>
+      <Urls>
+        <string>https://mdblist.com/lists/linaspurinis/top-watched-movies-of-the-week</string>
+        <string>https://mdblist.com/lists/Lewall90/weekly-most-watched</string>
+      </Urls>
+      <UsePlaylistsOverCollections>false</UsePlaylistsOverCollections>
+      <ExcludedLibraries />
+    </ImportSet>
+  </ImportSets>
+</PluginConfiguration>
