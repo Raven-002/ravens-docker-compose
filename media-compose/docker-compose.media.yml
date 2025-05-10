@@ -1,7 +1,7 @@
 services:
   sonarr:
     image: lscr.io/linuxserver/sonarr
-    container_name: sonarr
+    container_name: ${BASE_CONTAINER_NAME}sonarr
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -15,6 +15,7 @@ services:
       interval: 30s
       retries: 10
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.sonarr.rule=(PathPrefix(`/sonarr`))
       - traefik.http.services.sonarr.loadbalancer.server.port=8989
@@ -32,7 +33,7 @@ services:
         condition: service_healthy
   radarr:
     image: lscr.io/linuxserver/radarr
-    container_name: radarr
+    container_name: ${BASE_CONTAINER_NAME}radarr
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -46,6 +47,7 @@ services:
       interval: 30s
       retries: 10
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.radarr.rule=(PathPrefix(`/radarr`))
       - traefik.http.services.radarr.loadbalancer.server.port=7878
@@ -63,7 +65,7 @@ services:
         condition: service_healthy
   bazarr:
     image: lscr.io/linuxserver/bazarr
-    container_name: bazarr
+    container_name: ${BASE_CONTAINER_NAME}bazarr
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -77,6 +79,7 @@ services:
       interval: 5s
       retries: 10
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.bazarr.rule=(PathPrefix(`/bazarr`))
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
@@ -94,7 +97,7 @@ services:
         condition: service_healthy
   jellyseerr:
     image: ghcr.io/fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+    container_name: ${BASE_CONTAINER_NAME}jellyseerr
     environment:
       - LOG_LEVEL=debug
       - TZ=${TIMEZONE}
@@ -113,6 +116,7 @@ services:
       interval: 30s
       retries: 10
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.jellyseerr.rule=(PathPrefix(`/jellyseerr`))
       - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
@@ -173,7 +177,7 @@ services:
       - homepage.widget.key=${JELLYSEERR_API_KEY}
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
+    container_name: ${BASE_CONTAINER_NAME}prowlarr
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -186,6 +190,7 @@ services:
       interval: 30s
       retries: 10
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.prowlarr.rule=(PathPrefix(`/prowlarr`))
       - traefik.http.services.prowlarr.loadbalancer.server.port=9696
@@ -200,7 +205,7 @@ services:
       - homepage.widget.key=${PROWLARR_API_KEY}
   flaresolverr:
     image: 21hsmw/flaresolverr:nodriver
-    container_name: flaresolverr
+    container_name: ${BASE_CONTAINER_NAME}flaresolverr
     restart: on-failure
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
@@ -208,6 +213,7 @@ services:
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=${TIMEZONE}
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.flaresolverr.rule=PathPrefix(`/flaresolverr`)
       - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
@@ -215,7 +221,7 @@ services:
       - flaresolverr
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:libtorrentv1
-    container_name: qbittorrent
+    container_name: ${BASE_CONTAINER_NAME}qbittorrent
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -234,6 +240,7 @@ services:
       interval: 30s
       retries: 10
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.qbittorrent.rule=(PathPrefix(`/qbittorrent`))
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
@@ -256,7 +263,7 @@ services:
       - homepage.widget.password=${QBITTORRENT_PASSWORD}
   unpackerr:
     image: ghcr.io/unpackerr/unpackerr:latest
-    container_name: unpackerr
+    container_name: ${BASE_CONTAINER_NAME}unpackerr
     volumes:
       - ${DOWNLOAD_ROOT}:/data/torrents
     restart: on-failure
@@ -271,7 +278,7 @@ services:
       - no-new-privileges:true
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
+    container_name: ${BASE_CONTAINER_NAME}jellyfin
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -299,6 +306,7 @@ services:
       interval: 30s
       retries: 10
     labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
       - traefik.http.routers.jellyfin.rule=(PathPrefix(`/jellyfin`))
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096

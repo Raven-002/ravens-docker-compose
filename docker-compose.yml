@@ -71,6 +71,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+# Include media compose file
+include:
+  - media-compose/docker-compose.media.yml
+
 networks:
   default:
     name: raven-compose-net
