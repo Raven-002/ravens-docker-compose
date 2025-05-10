@@ -19,7 +19,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.sonarr.rule=(PathPrefix(`/sonarr`))
       - traefik.http.services.sonarr.loadbalancer.server.port=8989
-      - homepage.group=Download
+      - homepage.group=Media Download
       - homepage.name=Sonarr
       - homepage.icon=sonarr.png
       - homepage.href=/sonarr
@@ -51,7 +51,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.radarr.rule=(PathPrefix(`/radarr`))
       - traefik.http.services.radarr.loadbalancer.server.port=7878
-      - homepage.group=Download
+      - homepage.group=Media Download
       - homepage.name=Radarr
       - homepage.icon=radarr.png
       - homepage.href=/radarr
@@ -83,7 +83,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.bazarr.rule=(PathPrefix(`/bazarr`))
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
-      - homepage.group=Download
+      - homepage.group=Media Download
       - homepage.name=Bazarr
       - homepage.icon=bazarr.png
       - homepage.href=/bazarr
@@ -194,7 +194,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.prowlarr.rule=(PathPrefix(`/prowlarr`))
       - traefik.http.services.prowlarr.loadbalancer.server.port=9696
-      - homepage.group=Download
+      - homepage.group=Media Download
       - homepage.name=Prowlarr
       - homepage.icon=prowlarr.png
       - homepage.href=/prowlarr
@@ -252,7 +252,7 @@ services:
       - traefik.http.middlewares.qbittorrent-strip-slash.redirectregex.replacement=$$1/
       - traefik.http.middlewares.qbittorrent-strip-slash.redirectregex.permanent=false
       #- com.centurylinklabs.watchtower.depends-on=/vpn
-      - homepage.group=Download
+      - homepage.group=Media Download
       - homepage.name=qBittorrent
       - homepage.icon=qbittorrent.png
       - homepage.href=/qbittorrent
