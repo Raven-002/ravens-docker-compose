@@ -1,3 +1,35 @@
 ---
 # For configuration options and examples, please see:
 # https://gethomepage.dev/en/configs/services
+
+- A.I Services:
+    - Ollama:
+        icon: sh-ollama-light.png
+        description: A.I Backend
+        widget:
+          type: customapi
+          url: http://ollama:11434/api/ps
+          method: GET
+          mappings:
+            - field: models[0].name
+              label: "Running Model"
+              format: text
+            - field: models[0].size
+              label: "Model Size"
+              format: bytes
+            - field: models[0].size_vram
+              label: "VRAM Used"
+              format: bytes
+    - Open WebUI:
+        icon: open-webui-light.png
+        href: http://10.0.0.201:3000
+        description: A.I Frontend
+        widget:
+          type: customapi
+          url: http://open-webui:8080/api/models
+          headers:
+            Authorization: "Bearer {{HOMEPAGE_VAR_OPENWEBUI_KEY}}"
+          mappings:
+            - field: data
+              label: Total Models
+              format: size

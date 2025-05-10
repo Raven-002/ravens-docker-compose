@@ -1,4 +1,5 @@
-.env-secrets
+.env
+secrets.env
 logs/
 log/
 cache/

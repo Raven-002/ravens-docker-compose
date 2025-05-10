@@ -10,7 +10,10 @@ layout:
   Media:
     style: row
     columns: 3
-  Download:
+  Media Download:
+    style: row
+    columns: 2
+  A.I Services:
     style: row
     columns: 2
 
