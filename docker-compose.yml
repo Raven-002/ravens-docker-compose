@@ -87,39 +87,6 @@ services:
     depends_on:
       qbittorrent:
         condition: service_healthy
-  lidarr:
-    image: lscr.io/linuxserver/lidarr
-    container_name: lidarr
-    environment:
-      - PUID=${USER_ID}
-      - PGID=${GROUP_ID}
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${CONFIG_ROOT:-.}/lidarr:/config
-      - ${DATA_ROOT}:/data
-    restart: on-failure
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8686/lidarr/ping"]
-      interval: 30s
-      retries: 10
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.lidarr.rule=(PathPrefix(`/lidarr`))
-      - traefik.http.services.lidarr.loadbalancer.server.port=8686
-      - homepage.group=Media
-      - homepage.name=Lidarr
-      - homepage.icon=lidarr.png
-      - homepage.href=/lidarr
-      - homepage.description=Music management
-      - homepage.weight=2
-      - homepage.widget.type=lidarr
-      - homepage.widget.url=http://lidarr:8686/lidarr
-      - homepage.widget.key=${LIDARR_API_KEY}
-    profiles:
-      - lidarr
-    depends_on:
-      qbittorrent:
-        condition: service_healthy
   bazarr:
     image: lscr.io/linuxserver/bazarr
     container_name: bazarr
@@ -328,32 +295,6 @@ services:
       - UN_RADARR_0_API_KEY=${RADARR_API_KEY}
     security_opt:
       - no-new-privileges:true
-  sabnzbd:
-    image: lscr.io/linuxserver/sabnzbd:latest
-    container_name: sabnzbd
-    environment:
-      - PUID=${USER_ID}
-      - PGID=${GROUP_ID}
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${CONFIG_ROOT:-.}/sabnzbd:/config
-      - ${DATA_ROOT}:/data
-    restart: on-failure
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.sabnzbd.rule=(PathPrefix(`/sabnzbd`) || PathPrefix(`/sabnzbd`))
-      - traefik.http.services.sabnzbd.loadbalancer.server.port=8080
-      - homepage.group=Download
-      - homepage.name=Sabnzbd
-      - homepage.icon=sabnzbd.png
-      - homepage.href=/sabnzbd
-      - homepage.description=Usenet
-      - homepage.weight=3
-      - homepage.widget.type=sabnzbd
-      - homepage.widget.url=http://sabnzbd:8080/sabnzbd
-      - homepage.widget.key=${SABNZBD_API_KEY}
-    profiles:
-      - sabnzbd
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
@@ -396,75 +337,6 @@ services:
       - homepage.widget.type=jellyfin
       - homepage.widget.url=http://jellyfin:8096/jellyfin
       - homepage.widget.key=${JELLYFIN_API_KEY}
-  calibre-web:
-    image: lscr.io/linuxserver/calibre-web:latest
-    container_name: calibre-web
-    environment:
-      - PUID=${USER_ID}
-      - PGID=${GROUP_ID}
-      - TZ=${TIMEZONE}
-      - DOCKER_MODS=linuxserver/mods:universal-calibre
-      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
-    volumes:
-      - ${CONFIG_ROOT:-.}/calibre-web:/config
-      - ${DATA_ROOT}/books:/books
-    restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.middlewares.calibre-headers.headers.customRequestHeaders.X-Scheme=https
-      - traefik.http.middlewares.calibre-headers.headers.customRequestHeaders.X-Script-Name=/calibre
-      - traefik.http.middlewares.calibre-stripprefixregex.stripPrefixRegex.regex=/calibre
-      - traefik.http.routers.calibre.middlewares=calibre-headers,calibre-stripprefixregex
-      - traefik.http.routers.calibre.rule=(PathPrefix(`/calibre`))
-      - traefik.http.services.calibre.loadbalancer.server.port=8083
-      - homepage.group=Media
-      - homepage.name=Calibre-Web
-      - homepage.icon=calibre-web.png
-      - homepage.href=/calibre
-      - homepage.description=Books management
-      - homepage.weight=5
-      - homepage.widget.type=calibreweb
-      - homepage.widget.url=http://calibre-web:8083
-      - homepage.widget.username=${CALIBRE_USERNAME}
-      - homepage.widget.password=${CALIBRE_PASSWORD}
-    profiles:
-      - calibre-web
-  decluttarr:
-    image: ghcr.io/manimatter/decluttarr:latest
-    container_name: decluttarr
-    restart: on-failure
-    environment:
-      - PUID=${USER_ID}
-      - PGID=${GROUP_ID}
-      - TZ=${TIMEZONE}
-      - RADARR_URL=http://radarr:7878/radarr
-      - RADARR_KEY=${RADARR_API_KEY}
-      - SONARR_URL=http://sonarr:8989/sonarr
-      - SONARR_KEY=${SONARR_API_KEY}
-      - LIDARR_URL=http://lidarr:8686/lidarr
-      - LIDARR_KEY=${LIDARR_API_KEY}
-      - QBITTORRENT_URL=http://qbittorrent:8080
-      - QBITTORRENT_USERNAME=${QBITTORRENT_USERNAME}
-      - QBITTORRENT_PASSWORD=${QBITTORRENT_PASSWORD}
-      - LOG_LEVEL=${DECLUTTARR_LOG_LEVEL:-INFO}
-      - TEST_RUN=${DECLUTTARR_TEST_RUN:-False}
-      - REMOVE_TIMER=${DECLUTTARR_REMOVE_TIMER:-10}
-      - REMOVE_FAILED=${DECLUTTARR_REMOVE_FAILED:-True}
-      - REMOVE_FAILED_IMPORTS=${DECLUTTARR_REMOVE_FAILED_IMPORTS:-True}
-      - REMOVE_METADATA_MISSING=${DECLUTTARR_REMOVE_METADATA_MISSING:-True}
-      - REMOVE_MISSING_FILES=${DECLUTTARR_REMOVE_MISSING_FILES:-True}
-      - REMOVE_ORPHANS=${DECLUTTARR_REMOVE_ORPHANS:-True}
-      - REMOVE_SLOW=${DECLUTTARR_REMOVE_SLOW:-True}
-      - REMOVE_STALLED=${DECLUTTARR_REMOVE_STALLED:-True}
-      - REMOVE_UNMONITORED=${DECLUTTARR_REMOVE_UNMONITORED:-True}
-      - RUN_PERIODIC_RESCANS=${DECLUTTARR_RUN_PERIODIC_RESCANS:-}
-      - PERMITTED_ATTEMPTS=${DECLUTTARR_PERMITTED_ATTEMPTS:-3}
-      - NO_STALLED_REMOVAL_QBIT_TAG=${DECLUTTARR_REMOVAL_QBIT_TAG:-"stalled"}
-      - MIN_DOWNLOAD_SPEED=${DECLUTTARR_MIN_DOWNLOAD_SPEED:-100}
-      - FAILED_IMPORT_MESSAGE_PATTERNS=${DECLUTTARR_FAILED_IMPORT_MESSAGE_PATTERNS:-}
-      - IGNORED_DOWNLOAD_CLIENTS=${DECLUTTARR_IGNORED_DOWNLOAD_CLIENTS:-}
-    profiles:
-      - decluttarr
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
