@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker compose -f /opt/jellyfin-docker-compose/config/docker-compose.yml down
+docker compose -f /opt/raven-compose/docker-compose.yml down

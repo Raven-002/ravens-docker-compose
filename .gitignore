@@ -1,11 +1,2 @@
-bazarr/*
-homepage/*
-!homepage/tpl
-jellyfin/*
-jellyseerr/*
-joplin/*
-prowlarr/*
-qbittorrent/*
-radarr/*
-sonarr/*
 .env
+logs/
