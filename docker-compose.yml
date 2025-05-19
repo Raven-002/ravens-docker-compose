@@ -42,7 +42,8 @@ services:
       - HOMEPAGE_VAR_WEATHER_UNIT=${HOMEPAGE_VAR_WEATHER_UNIT}
       - HOMEPAGE_VAR_OPENWEBUI_KEY=${OPEN_WEBUI_API_KEY}
     volumes:
-      - ${CONFIG_ROOT}/homepage:/app/config
+      - ${CONFIG_ROOT}/homepage/homepage-config:/app/config
+      - ${CONFIG_ROOT}/homepage/homepage-images:/app/public/images
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${DATA_ROOT}:/data
     restart: on-failure
