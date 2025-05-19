@@ -259,8 +259,9 @@ services:
       - homepage.description=Bittorrent client
       - homepage.weight=2
       - homepage.widget.type=qbittorrent
-      - homepage.widget.username=${QBITTORRENT_USERNAME}
-      - homepage.widget.password=${QBITTORRENT_PASSWORD}
+      - homepage.widget.url=http://qbittorrent:8080
+      # - homepage.widget.username=${QBITTORRENT_USERNAME}
+      # - homepage.widget.password=${QBITTORRENT_PASSWORD}
   unpackerr:
     image: ghcr.io/unpackerr/unpackerr:latest
     container_name: ${BASE_CONTAINER_NAME}unpackerr
