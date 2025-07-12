@@ -2,7 +2,7 @@ services:
   traefik:
     image: ghcr.io/traefik/traefik:3.3
     container_name: ${BASE_CONTAINER_NAME}traefik
-    restart: on-failure
+    restart: always
     command:
       - --ping=true
       - --api.insecure=true
@@ -46,7 +46,7 @@ services:
       - ${CONFIG_ROOT}/homepage/homepage-images:/app/public/images
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${DATA_ROOT}:/data
-    restart: on-failure
+    restart: always
     command:
       [node, server.js]
     labels:
@@ -58,7 +58,7 @@ services:
   watchtower:
     image: ghcr.io/containrrr/watchtower:latest
     container_name: ${BASE_CONTAINER_NAME}watchtower
-    restart: on-failure
+    restart: always
     environment:
       - WATCHTOWER_CLEANUP=true
     volumes:
@@ -67,7 +67,7 @@ services:
   autoheal:
     image: willfarrell/autoheal:latest
     container_name: ${BASE_CONTAINER_NAME}autoheal
-    restart: on-failure
+    restart: always
     environment:
       - AUTOHEAL_CONTAINER_LABEL=all
     volumes:

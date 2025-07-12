@@ -13,7 +13,7 @@ services:
           - driver: nvidia
             capabilities: ["gpu"]
             count: all
-    restart: on-failure
+    restart: always
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -29,4 +29,4 @@ services:
       - 'WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY:-}'
     extra_hosts:
       - host.docker.internal:host-gateway
-    restart: on-failure
+    restart: always

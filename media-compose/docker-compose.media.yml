@@ -9,7 +9,7 @@ services:
     volumes:
       - ${MEDIA_CONFIG_ROOT}/sonarr:/config
       - ${MEDIA_DATA_ROOT}:/data
-    restart: on-failure
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://127.0.0.1:8989/sonarr/ping"]
       interval: 30s
@@ -41,7 +41,7 @@ services:
     volumes:
       - ${MEDIA_CONFIG_ROOT}/radarr:/config
       - ${MEDIA_DATA_ROOT}:/data
-    restart: on-failure
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://127.0.0.1:7878/radarr/ping"]
       interval: 30s
@@ -73,7 +73,7 @@ services:
     volumes:
       - ${MEDIA_CONFIG_ROOT}/bazarr/config:/config
       - ${MEDIA_DATA_ROOT}:/data
-    restart: on-failure
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://127.0.0.1:6767/bazarr/ping"]
       interval: 5s
@@ -103,7 +103,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${MEDIA_CONFIG_ROOT}/jellyseerr:/app/config
-    restart: on-failure
+    restart: always
     healthcheck:
       test:
         [
@@ -184,7 +184,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${MEDIA_CONFIG_ROOT}/prowlarr:/config
-    restart: on-failure
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://127.0.0.1:9696/prowlarr/ping"]
       interval: 30s
@@ -206,7 +206,7 @@ services:
   flaresolverr:
     image: 21hsmw/flaresolverr:nodriver
     container_name: ${BASE_CONTAINER_NAME}flaresolverr
-    restart: on-failure
+    restart: always
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
@@ -231,7 +231,7 @@ services:
     volumes:
       - ${MEDIA_CONFIG_ROOT}/qbittorrent:/config
       - ${MEDIA_DOWNLOAD_ROOT}:/data/torrents
-    restart: on-failure
+    restart: always
     healthcheck:
       # Container may fail if the PIA's token expired, so mark as unhealthy when there is no internet connection
       # see: https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
@@ -267,7 +267,7 @@ services:
     container_name: ${BASE_CONTAINER_NAME}unpackerr
     volumes:
       - ${MEDIA_DOWNLOAD_ROOT}:/data/torrents
-    restart: on-failure
+    restart: always
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -294,7 +294,7 @@ services:
     ports:
       - "7359:7359/udp"
       - "1900:1900/udp"
-    restart: on-failure
+    restart: always
     deploy:
       resources:
         reservations:
