@@ -75,6 +75,7 @@ services:
 
 # Include media compose file
 include:
+  - auth-compose/docker-compose.auth.yml
   - media-compose/docker-compose.media.yml
   - AI-compose/docker-compose.ai.yml
 
