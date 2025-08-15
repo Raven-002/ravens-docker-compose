@@ -153,8 +153,9 @@ services:
       - homepage.href=http://vpn.${DOMAIN}
       - homepage.description=VPN server with web management
       - homepage.weight=4
-      - homepage.widget.type=generic
-      - homepage.widget.url=http://wireguard:51821
+      - homepage.widget.type=wgeasy
+      - homepage.widget.url=http://vpn.${DOMAIN}
+      - homepage.widget.password=${VPN_ADMIN_PASSWORD}
 
 # Include media compose file
 include:
