@@ -27,6 +27,16 @@ if [ "$(sysctl -n net.ipv4.conf.$LAN_IF.proxy_arp)" -ne 1 ]; then
     sudo sysctl -w net.ipv4.conf.$LAN_IF.proxy_arp=1
 fi
 
+echo "[INFO] Pre-flight network checks complete. Starting Docker Compose..."
+
+docker compose -f /opt/raven-compose/docker-compose.yml down "${@}"
+docker compose \
+    -f /opt/raven-compose/docker-compose.yml \
+    --env-file /opt/raven-compose/.env \
+    up \
+    -d \
+    "${@}"
+
 # 3️⃣ Add VPN subnet route if missing
 if ! ip route show | grep -q "$VPN_SUBNET"; then
     echo "[INFO] Adding route for VPN subnet $VPN_SUBNET via $VPN_IF..."
@@ -40,13 +50,3 @@ fi
 #     sudo iptables -A FORWARD -i $VPN_IF -j ACCEPT
 #     sudo iptables -A FORWARD -o $VPN_IF -j ACCEPT
 # fi
-
-echo "[INFO] Pre-flight network checks complete. Starting Docker Compose..."
-
-docker compose -f /opt/raven-compose/docker-compose.yml down "${@}"
-docker compose \
-    -f /opt/raven-compose/docker-compose.yml \
-    --env-file /opt/raven-compose/.env \
-    up \
-    -d \
-    "${@}"
