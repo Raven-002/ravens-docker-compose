@@ -22,7 +22,7 @@
               format: bytes
     - Open WebUI:
         icon: open-webui-light.png
-        href: http://10.0.0.201:3000
+        href: http://ai.home/
         description: A.I Frontend
         widget:
           type: customapi
@@ -33,3 +33,9 @@
             - field: data
               label: Total Models
               format: size
+- Network:
+    - Cockpit:
+        icon: cockpit.png
+        href: http://server.home:9090
+        description: Server management interface
+        weight: 3

@@ -6,3 +6,7 @@ cache/
 .cache/
 *.dll
 .aspnet
+wireguard/*.conf
+wireguard/*.json
+portainer/
+adguard/

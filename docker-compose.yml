@@ -27,6 +27,56 @@ services:
       interval: 30s
       retries: 10
 
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: ${BASE_CONTAINER_NAME}adguardhome
+    environment:
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_ROOT}/adguard/work:/opt/adguardhome/work
+      - ${CONFIG_ROOT}/adguard/conf:/opt/adguardhome/conf
+    network_mode: host
+    restart: always
+    labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
+      - traefik.enable=true
+      - traefik.http.routers.adguardhome.rule=(HOST(`adguard.${DOMAIN}`))
+      - traefik.http.services.adguardhome.loadbalancer.server.port=5380
+      - homepage.group=Network
+      - homepage.name=AdGuard Home
+      - homepage.icon=adguard-home.png
+      - homepage.href=http://adguard.${DOMAIN}/
+      - homepage.description=DNS server & ad blocker
+      - homepage.weight=2
+      - homepage.widget.type=adguard
+      - homepage.widget.url=http://adguard:5380
+      - homepage.widget.username=${ADGUARD_USER}
+      - homepage.widget.password=${ADGUARD_PASS}
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: ${BASE_CONTAINER_NAME}portainer
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${CONFIG_ROOT}/portainer:/data
+    restart: always
+    labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN}`)
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+      - homepage.group=Management
+      - homepage.name=Portainer
+      - homepage.icon=portainer.png
+      - homepage.href=http://portainer.${DOMAIN}
+      - homepage.description=Docker container management
+      - homepage.weight=1
+      - homepage.widget.type=portainer
+      - homepage.widget.url=http://portainer:9000
+      - homepage.widget.env=local
+      - homepage.widget.key=${PORTAINER_API_KEY}
+
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: ${BASE_CONTAINER_NAME}homepage
@@ -52,7 +102,7 @@ services:
     labels:
       - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
-      - traefik.http.routers.homepage.rule=(PathPrefix(`/`))
+      - traefik.http.routers.homepage.rule=Host(`server.${DOMAIN}`)
       - traefik.http.services.homepage.loadbalancer.server.port=3000
 
   watchtower:
@@ -72,6 +122,45 @@ services:
       - AUTOHEAL_CONTAINER_LABEL=all
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  wireguard:
+    image: ghcr.io/wg-easy/wg-easy:latest
+    container_name: ${BASE_CONTAINER_NAME}wireguard
+    network_mode: "host"                  # <-- use host networking
+    environment:
+      - PASSWORD_HASH=${VPN_ADMIN_PASSWORD_HASH}      # Web UI password
+      - WG_HOST=${VPN_HOST}                 # Public IP or domain
+      - WG_DEFAULT_ADDRESS=192.168.2.x      # VPN subnet
+      - WG_DEFAULT_DNS=192.168.1.202        # DNS inside VPN (set to AdGuard)
+      - WG_ALLOWED_IPS=0.0.0.0/0
+      - WG_PERSISTENT_KEEPALIVE=25
+      - WG_PORT=51820
+      - PORT=51821                  # Port for the web interface.
+    volumes:
+      - ${CONFIG_ROOT}/wireguard:/etc/wireguard
+    # ports:
+    #   - "51820:51820/udp"
+    #   - "51821:51821/tcp"
+    restart: always
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    # sysctls:
+    #   - net.ipv4.ip_forward=1
+    #   - net.ipv4.conf.all.src_valid_mark=1
+    labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
+      - traefik.enable=true
+      - traefik.http.routers.wireguard.rule=Host(`vpn.${DOMAIN}`)
+      - traefik.http.services.wireguard.loadbalancer.server.port=51821
+      - homepage.group=Network
+      - homepage.name=WireGuard VPN
+      - homepage.icon=wireguard.png
+      - homepage.href=http://vpn.${DOMAIN}
+      - homepage.description=VPN server with web management
+      - homepage.weight=4
+      - homepage.widget.type=generic
+      - homepage.widget.url=http://wireguard:51821
 
 # Include media compose file
 include:

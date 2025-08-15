@@ -29,4 +29,9 @@ services:
       - 'WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY:-}'
     extra_hosts:
       - host.docker.internal:host-gateway
+    labels:
+      - traefik.${BASE_CONTAINER_NAME}=true
+      - traefik.enable=true
+      - traefik.http.routers.open-webui.rule=Host(`ai.${DOMAIN}`)
+      - traefik.http.services.open-webui.loadbalancer.server.port=8080
     restart: always
