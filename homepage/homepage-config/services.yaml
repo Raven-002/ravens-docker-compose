@@ -33,7 +33,7 @@
             - field: data
               label: Total Models
               format: size
-- Network:
+- Management:
     - Cockpit:
         icon: cockpit.png
         href: http://server.home:9090

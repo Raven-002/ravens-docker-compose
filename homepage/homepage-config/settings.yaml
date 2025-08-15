@@ -9,13 +9,19 @@ headerStyle: underlined
 layout:
   Media:
     style: row
-    columns: 3
+    columns: 2
+  A.I Services:
+    style: row
+    columns: 2
   Media Download:
     style: row
     columns: 3
-  A.I Services:
+  Network:
     style: row
-    columns: 3
+    columns: 2
+  Management:
+    style: row
+    columns: 2
 
 quicklaunch:
   searchDescriptions: true

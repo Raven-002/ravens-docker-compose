@@ -22,7 +22,7 @@ services:
       - homepage.group=Media Download
       - homepage.name=Sonarr
       - homepage.icon=sonarr.png
-      - homepage.href=/sonarr
+      - homepage.href=http://media.${DOMAIN}/sonarr
       - homepage.description=Series management
       - homepage.weight=0
       - homepage.widget.type=sonarr
@@ -54,7 +54,7 @@ services:
       - homepage.group=Media Download
       - homepage.name=Radarr
       - homepage.icon=radarr.png
-      - homepage.href=/radarr
+      - homepage.href=http://media.${DOMAIN}/radarr
       - homepage.description=Movies management
       - homepage.weight=1
       - homepage.widget.type=radarr
@@ -86,7 +86,7 @@ services:
       - homepage.group=Media Download
       - homepage.name=Bazarr
       - homepage.icon=bazarr.png
-      - homepage.href=/bazarr
+      - homepage.href=http://media.${DOMAIN}/bazarr
       - homepage.description=Subtitles management
       - homepage.weight=4
       - homepage.widget.type=bazarr
@@ -169,7 +169,7 @@ services:
       - homepage.group=Media
       - homepage.name=JellySeerr
       - homepage.icon=jellyseerr.png
-      - homepage.href=/jellyseerr
+      - homepage.href=http://media.${DOMAIN}/jellyseerr
       - homepage.description=Content Recommendations and Request Management
       - homepage.weight=3
       - homepage.widget.type=jellyseerr
@@ -197,7 +197,7 @@ services:
       - homepage.group=Media Download
       - homepage.name=Prowlarr
       - homepage.icon=prowlarr.png
-      - homepage.href=/prowlarr
+      - homepage.href=http://media.${DOMAIN}/prowlarr
       - homepage.description=Indexers management
       - homepage.weight=1
       - homepage.widget.type=prowlarr
@@ -255,7 +255,7 @@ services:
       - homepage.group=Media Download
       - homepage.name=qBittorrent
       - homepage.icon=qbittorrent.png
-      - homepage.href=/qbittorrent
+      - homepage.href=http://media.${DOMAIN}/qbittorrent
       - homepage.description=Bittorrent client
       - homepage.weight=2
       - homepage.widget.type=qbittorrent
@@ -314,7 +314,7 @@ services:
       - homepage.group=Media
       - homepage.name=Jellyfin
       - homepage.icon=jellyfin.png
-      - homepage.href=/jellyfin
+      - homepage.href=http://media.${DOMAIN}/jellyfin
       - homepage.description=Media server
       - homepage.weight=4
       - homepage.widget.type=jellyfin
