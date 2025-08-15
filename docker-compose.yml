@@ -35,7 +35,7 @@ services:
     volumes:
       - ${CONFIG_ROOT}/adguard/work:/opt/adguardhome/work
       - ${CONFIG_ROOT}/adguard/conf:/opt/adguardhome/conf
-    network_mode: host
+    network_mode: host # Host is needed for udp:53 to work correctly.
     restart: always
     labels:
       - traefik.${BASE_CONTAINER_NAME}=true
@@ -49,7 +49,7 @@ services:
       - homepage.description=DNS server & ad blocker
       - homepage.weight=2
       - homepage.widget.type=adguard
-      - homepage.widget.url=http://adguard:5380
+      - homepage.widget.url=http://adguard.${DOMAIN}:80
       - homepage.widget.username=${ADGUARD_USER}
       - homepage.widget.password=${ADGUARD_PASS}
 
@@ -74,7 +74,7 @@ services:
       - homepage.weight=1
       - homepage.widget.type=portainer
       - homepage.widget.url=http://portainer:9000
-      - homepage.widget.env=local
+      - homepage.widget.env=${PORTAINER_ENVIRONMENT_ID}
       - homepage.widget.key=${PORTAINER_API_KEY}
 
   homepage:
@@ -126,28 +126,22 @@ services:
   wireguard:
     image: ghcr.io/wg-easy/wg-easy:latest
     container_name: ${BASE_CONTAINER_NAME}wireguard
-    network_mode: "host"                  # <-- use host networking
+    network_mode: "host" # Host is needed for vpn functionality.
     environment:
-      - PASSWORD_HASH=${VPN_ADMIN_PASSWORD_HASH}      # Web UI password
-      - WG_HOST=${VPN_HOST}                 # Public IP or domain
-      - WG_DEFAULT_ADDRESS=192.168.2.x      # VPN subnet
-      - WG_DEFAULT_DNS=192.168.1.202        # DNS inside VPN (set to AdGuard)
-      - WG_ALLOWED_IPS=0.0.0.0/0
+      - PASSWORD_HASH=${VPN_ADMIN_PASSWORD_HASH}
+      - WG_HOST=${VPN_HOST}
+      - WG_DEFAULT_ADDRESS=${VPN_DEFAULT_ADDRESS}
+      - WG_DEFAULT_DNS=${192.168.1.202}
+      - WG_ALLOWED_IPS=${0.0.0.0/0}
       - WG_PERSISTENT_KEEPALIVE=25
-      - WG_PORT=51820
-      - PORT=51821                  # Port for the web interface.
+      - WG_PORT=51820 # Port for the vpn
+      - PORT=51821 # Port for the web interface.
     volumes:
       - ${CONFIG_ROOT}/wireguard:/etc/wireguard
-    # ports:
-    #   - "51820:51820/udp"
-    #   - "51821:51821/tcp"
     restart: always
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
-    # sysctls:
-    #   - net.ipv4.ip_forward=1
-    #   - net.ipv4.conf.all.src_valid_mark=1
     labels:
       - traefik.${BASE_CONTAINER_NAME}=true
       - traefik.enable=true
